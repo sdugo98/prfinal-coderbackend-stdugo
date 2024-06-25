@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="display-4 text-center mt-4 ">REGISTRO</h1>
+            <hr class="hr-divider">
+
+            <form action="/api/sessions/registro" method="post">
+                {{#if error}}
+                <div class="alert alert-danger">
+                    {{error}}
+                </div>
+                {{/if}}
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">Ingrese nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="first_name">
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Ingrese Apellido:</label>
+                    <input type="text" class="form-control" id="apellido" name="last_name">
+                </div>
+
+                <div class="mb-3">
+                    <label for="age" class="form-label">Ingrese edad:</label>
+                    <input type="number" class="form-control" id="age" name="age">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Coloque su Email:</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="mb-3">
+                    <label for="rol" class="form-label">Seleccione su rol:</label>
+                    <select class="form-control" id="rol" name="rol" required>
+                        <option value="" disabled selected hidden>Seleccione su rol</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="premiun">Premiun</option>
+                    </select>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{>menu1}}

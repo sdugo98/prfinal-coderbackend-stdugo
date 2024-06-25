@@ -1,0 +1,67 @@
+<h1 class="text-center mt-4 view-title">DETALLE CARRITO:</h1>
+<hr class="hr-divider" />
+  <div id="containerCart" class="container mt-4">
+
+    <div id="containerProducts" class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <h4 class="detailCart text-center fw-bold">
+                <div>Titulo: {{cart.title}}</div>
+                <div>ID: {{cart._id}}</div>
+                <br /><br />
+                <div>Productos en carrito:</div>
+                <hr class="hr-divider" />
+                <div>
+                  {{#each cart.products}}
+                  <h4 class="card-title view-title">{{this.product.title}}</h4>
+                  <p class="card-text">{{this.product.description}}</p>
+                  <p class="card-text"><strong>Id producto:</strong>{{this.product._id}}</p>
+                  <p class="card-text"><strong>Cantidad:</strong>{{this.quantity}}</p>
+                  <p class="card-text"><strong>Subtotal:</strong>{{this.subtotal}}</p>
+                  <hr class="hr-divider" />
+                  {{/each}}
+
+                  <h4 class="card-title view-title">TOTAL: {{total}}</h4>
+                 <button id="btnConfirm" class="btn btn-primary" onclick="confirmBuy('{{cart._id}}')">Confirmar compra</button>
+
+                </div>
+
+              </h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const confirmBuy = async (cid) => {
+  try {
+    console.log(cid);
+
+    let response = await fetch(`http://localhost:8080/api/carts/${cid}/purchase`, {
+      method: "post",
+    });
+
+    if (!response.ok) {
+      console.error("Error al confirmar la compra");
+      return;
+    }
+
+    let data = await response.json();
+    if (data.total) {
+      let total = data.total
+      return window.location.href = `/pagos/${total}`;
+ 
+    } else {
+      console.error("La respuesta no contiene un total válido");
+    }
+  } catch (error) {
+    console.error("Error interno:", error);
+  }
+
+};
+
+</script>

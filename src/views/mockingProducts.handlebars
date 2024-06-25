@@ -1,0 +1,15 @@
+<h1 class="display-4 text-center mt-4">MOCKING</h1>
+<hr class="hr-divider">
+<div id="container-products" class="d-flex flex-wrap justify-content-between">
+  {{#each fakeProducts}}
+  <div class="card mb-3" style="width: 30%;">
+    <div class="card-body">
+      <h4 class="card-title">{{this.title}}</h4>
+      <p class="card-text">code: {{this.code}} ID: {{this.id}}</p>
+      <p class="card-text">Stock: {{this.stock}}</p>
+      <p class="text-success">Precio: ${{this.price}} </p>
+    </div>
+  </div>
+  {{/each}}
+
+  {{>menu2}}

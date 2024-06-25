@@ -1,0 +1,130 @@
+body {
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: lightgray;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+  
+  .container {
+    margin-top: 50px;
+  }
+  
+  .card {
+    border: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  .card-title {
+    font-size: 1.2em; 
+    font-weight: bold; 
+    color: #007bff; 
+    margin-bottom: 10px; 
+  }
+  
+  
+  .list-group-item {
+    background-color: #f8f9fa;
+    border: none;
+  }
+  
+  .detailCart div {
+    margin-bottom: 10px;
+  }
+  
+  .text-success {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  /* Botones */
+  .btn,
+  .btn-detail,
+  .btn-pagination {
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .btn:hover,
+  .btn-detail:hover,
+  .btn-pagination:hover {
+    cursor: pointer;
+  }
+  
+  /* Botones de colores */
+.btn-primary,
+.btn-detail {
+  color: #fff;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.btn-primary:hover,
+.btn-detail:hover {
+  background-color: #fff; 
+  color: #007bff; 
+  border: 1px solid #007bff;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.btn-success:hover {
+  background-color: #fff;
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border:#dc3545
+}
+
+.btn-danger:hover {
+  background-color: #fff;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.github-logo{
+  height: 20px; 
+  margin-right: 10px; 
+}
+
+
+  /* Títulos y dividers */
+  
+  .hr-divider {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #007bff, transparent);
+    margin-bottom: 30px;
+  }
+
+
+  /* manejo errores */
+  .errorRegister{
+    color: red;
+  }
+
+  .userSucess{
+    color: #28a745;
+  }
+  
+
+  /* Seleccionador registro */
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat;
+    background-position: right 8px top 50%;
+    background-size: 12px;
+}

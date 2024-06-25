@@ -1,0 +1,366 @@
+paths:
+  /products:
+    get:
+      security:
+        - cookieAuth: []
+      summary: Obtener y listar todos los productos de la base de datos, implementando paginación.
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: Éxito al recuperar productos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        "404":
+          description: Error al recuperar productos.
+        "500":
+          description: Error interno del servidor.
+  /products?page:
+    get:
+      security:
+        - cookieAuth: []
+      parameters:
+          - in: query
+            name: page
+            schema:
+              type: number
+            description: numero de pagina
+      summary: Obtener y listar todos los productos de la base de datos, implementando paginación.
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: Éxito al recuperar productos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        "404":
+          description: Error al recuperar productos.
+        "500":
+          description: Error interno del servidor.
+  /products?disp:
+    get:
+      security:
+        - cookieAuth: []
+      parameters:
+          - in: query
+            name: disp
+            schema:
+              type: string
+            description: validacion por status
+      summary: Obtener y listar todos los productos de la base de datos, implementando validacion por status.
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: Éxito al recuperar productos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        "404":
+          description: Error al recuperar productos.
+        "500":
+          description: Error interno del servidor.
+  /products?limit:
+    get:
+      security:
+        - cookieAuth: []
+      parameters:
+          - in: query
+            name: limit
+            schema:
+              type: number
+            description: numero limit de listado
+      summary: Obtener y listar todos los productos de la base de datos, implementando un limite.
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: Éxito al recuperar productos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        "404":
+          description: Error al recuperar productos.
+        "500":
+          description: Error interno del servidor.
+  /products?sort:
+    get:
+      security:
+        - cookieAuth: []
+      parameters:
+          - in: query
+            name: sort
+            schema:
+              type: number
+            description: ordena segun precio
+      summary: Obtener y listar todos los productos de la base de datos, implementando un reordenamiento segun precio.
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: Éxito al recuperar productos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        "404":
+          description: Error al recuperar productos.
+        "500":
+          description: Error interno del servidor.
+  /products?category:
+    get:
+      security:
+        - cookieAuth: []
+      parameters:
+          - in: query
+            name: category
+            schema:
+              type: string
+            description: categoria
+      summary: Obtener y listar todos los productos de la base de datos, implementando un filtro por category.
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: Éxito al recuperar productos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        "404":
+          description: Error al recuperar productos.
+        "500":
+          description: Error interno del servidor.
+  /products/{prodId}:
+    get:
+      security:
+        - cookieAuth: []
+      summary: Obtener un producto por su ID.
+      tags:
+        - Products
+      parameters:
+        - name: prodId
+          in: path
+          required: true
+          description: ID del producto a buscar.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Éxito al recuperar el producto.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        "400":
+          description: ID incorrecto o no se encontró el producto.
+        "500":
+          description: Error interno del servidor.
+  /api/products:
+    post:
+      security:
+        - cookieAuth: []
+      summary: Crear un nuevo producto y guardarlo en la base de datos.
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/createProduct'
+      responses:
+        "201":
+          description: Éxito al crear el producto.
+        "403":
+          description: Error al crear el producto.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#components/schemas/error1'
+                  - $ref: '#components/schemas/error3'
+                  - $ref: '#components/schemas/error2'
+        "500":
+          description: Error interno del servidor.
+  /api/products/{prodId}:
+    put:
+      security:
+        - cookieAuth: []
+      summary: Modificar un producto existente por su ID.
+      tags:
+        - Products
+      parameters:
+        - name: prodId
+          in: path
+          required: true
+          description: ID del producto a modificar.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/putProduct'
+      responses:
+        "201":
+          description: Éxito al modificar el producto.
+        "400":
+          description: ID incorrecto o no se encontró el producto.
+          content: 
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#components/schemas/error4'
+                  - $ref: '#components/schemas/error5'
+                  - $ref: '#components/schemas/error6'
+        "500":
+          description: Error interno del servidor.
+    delete:
+      security:
+        - cookieAuth: []
+      summary: Eliminar un producto por su ID.
+      tags:
+        - Products
+      parameters:
+        - name: prodId
+          in: path
+          required: true
+          description: ID del producto a eliminar.
+          schema:
+            type: string
+      responses:
+        "201":
+          description: Éxito al eliminar el producto.
+        "400":
+          description: ID incorrecto o no se encontró el producto.
+          content: 
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#components/schemas/error5'
+                  - $ref: '#components/schemas/error7'
+        "500":
+          description: Error interno del servidor.
+
+components:
+  schemas:
+    error1:
+      type: string
+      description: Faltan campos obligatorios para agregar el producto
+    error2:
+      type: string
+      description: "Controlar error numerico en  los siguientes campos: title, description, code, category"
+    error3:
+      type: string
+      description: Error al crear    
+    error4:
+      type: string
+      description: No se puede modificar la propiedad _id
+    error5:
+      type: string
+      description: Solo puedes modificar productos creados por ti      
+    error6:
+      type: string
+      description: Error al modificar
+    error7:
+      type: string
+      description: Error al eliminar          
+    Products:
+      type: object
+      properties:
+        _id: 
+          type: string
+        title: 
+          type: string
+        description: 
+          type: string
+        code: 
+          type: string
+        price: 
+          type: number
+        status: 
+          type: boolean
+        stock: 
+          type: number
+        category: 
+          type: string
+        thumbnail: 
+          type: string
+        owner: 
+          type: string
+  requestBodies:
+    createProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Nombre de product
+        description:
+          type: string
+          description: description de product
+        code:
+          type: string
+          description: Code de product
+        price:
+          type: number
+          description: Price de product
+        stock: 
+          type: number
+          description: Stock de product
+        category: 
+          type: string
+          description: Category de product
+      example:
+        title: Product de swagger
+        description: test swagger
+        code: codeUnico
+        price: 25
+        stock: 22
+        category: Test
+    putProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Nombre de product
+        description:
+          type: string
+          description: description de product
+        code:
+          type: string
+          description: Code de product
+        price:
+          type: number
+          description: Price de product
+        stock: 
+          type: number
+          description: Stock de product
+        category: 
+          type: string
+          description: Category de product
+      example:
+        title: Mod swagger
+  securitySchemes:
+    basicAuth:     
+      type: http
+      scheme: basic
+    bearerAuth:            
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    
+    cookieAuth:         
+      type: apiKey
+      in: cookie
+      name: CookieUser  
+security:
+  - basicAuth: []  
+  - bearerAuth: []  
+  - cookieAuth: []

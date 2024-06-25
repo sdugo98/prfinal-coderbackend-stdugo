@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="display-4 text-center mt-4 ">CAMBIAR ROL</h1>
+            <hr class="hr-divider">
+            <div class="container text-center">
+                <div class="card p-4 m-5">
+                    <h1 class="display-4">¡Bienvenido, {{user.first_name}}!</h1>
+                    <h2 class="h4 mt-3">Su rol es: <span class="badge bg-primary">{{user.rol}}</span></h2>
+                    <hr class="hr-divider">
+
+                    <form id="changeRolForm">
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Seleccione su rol:</label>
+                            <select class="form-control" id="rol" name="rol" required>
+                                <option value="" disabled selected hidden>Seleccione su rol</option>
+                                <option value="user">User</option>
+                                <option value="premiun">Premiun</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">CAMBIAR ROL</button>
+                    </form>
+                    <div id="resFetch" class="text-center"></div>
+                </div>
+            </div>
+        </div>
+
+        {{>menu1}}
+        <script src="/js/viewsUserRol.js"></script>

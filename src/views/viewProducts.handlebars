@@ -1,0 +1,132 @@
+<div class="container">
+  <h1 class="text-center mt-4 view-title">View Products</h1>
+  <hr class="hr-divider" />
+
+  {{>menu2}}
+  <br><br>
+  <div class="container text-center">
+    <div class="card p-4 m-5">
+      <h1 class="display-4">¡Bienvenido, {{user.first_name}}!</h1>
+      <h2 class="h4 mt-3">Su rol es: <span class="badge bg-primary">{{user.rol}}</span></h2>
+      <li class="list-group-item h4" id="cartUser" cart={{user.cart._id}}><strong>ID cart:</strong> {{user.cart._id}}
+      </li>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h2 class="text-center">AGREGAR PRODUCTO</h2>
+      <div class="container-forms">
+        <div class="mt-4">
+          <div id="resFetch" class="text-center"></div>
+        </div>
+        <form id="addProductForm">
+          <div class="form-group">
+            <label for="title">TITLE</label>
+            <input name="title" type="text" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="description">DESCRIPTION</label>
+            <input name="description" type="text" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="code">CODE</label>
+            <input name="code" type="text" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="price">PRICE</label>
+            <input name="price" type="number" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="stock">STOCK</label>
+            <input name="stock" type="number" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="category">CATEGORY</label>
+            <input name="category" type="text" class="form-control" />
+          </div>
+          <button type="submit" class="btn btn-primary mt-2">Agregar Producto</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2 class="text-center">BORRAR PRODUCTO</h2>
+        <form id="deleteProductForm">
+          <div class="form-group">
+            <label for="deleteID">ID</label>
+            <input id="deleteID" type="text" class="form-control" />
+          </div>
+          <button type="submit" class="btn btn-danger mt-2">BORRAR</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <br>
+  <hr>
+
+  <h2 class="text-center">Lista de productos:</h2>
+  <div class="mt-4">
+    <div id="resError" class="text-center"></div>
+  </div>
+  <div id="container-products" class="d-flex flex-wrap justify-content-between">
+    {{#each products}}
+    <div class="card mb-3 p-2" style="width: 30%;">
+      <div class="card-body">
+        <h4 class="card-title">{{this.title}}</h4>
+        <p class="card-text">code: {{this.code}} ID: {{this.id}}</p>
+        <p class="card-text">Stock: {{this.stock}}</p>
+        <p class="text-success">Precio: ${{this.price}} </p>
+      </div>
+      <a href="products/{{this._id}}" class="btn btn-detail btn-primary">Ver detalle</a>
+      {{#if (gt this.stock 0)}} {{!-- gt segun doc de Handlebars helpers, es un comparador de valores --}}
+      <button class="btn btn-success mt-2 btnAddToCart" data-product-id="{{this._id}}">Agregar Al carrito</button>
+      {{else}}
+      <button class="btn btn-danger mt-2 disabled">No hay stock</button>
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+
+  <br>
+  <hr>
+
+  <div class="text-center">
+    {{#if sort}}
+    <a href="/products?page=1&sort={{sort}} " class="btn btn-pagination btn-primary">Pág.1</a>
+    {{else}}
+    <a href="/products?page=1" class="btn btn-pagination btn-primary">Pág.1</a>
+    {{/if}}
+
+    {{#if hasPrevPage}}
+    {{#if sort}}
+    <a href="?/productspage={{prevPage}}&sort={{sort}} " class="btn btn-pagination btn-primary">Pág.Ant.</a>
+    {{else}}
+    <a href="/products?page={{prevPage}}" class="btn btn-pagination btn-primary">Pág.Ant.</a>
+    {{/if}}
+    {{else}}
+    <span class="btn btn-pagination btn-primary">Pág.Ant.</span>
+    {{/if}}
+
+    {{#if hasNextPage}}
+    {{#if sort}}
+    <a href="/products?page={{nextPage}}&sort={{sort}} " class="btn btn-pagination btn-primary">Pág.Sig.</a>
+    {{else}}
+    <a href="/products?page={{nextPage}}" class="btn btn-pagination btn-primary">Pág.Sig.</a>
+    {{/if}}
+    {{else}}
+    <span class="btn btn-pagination btn-primary">Pág.Sig.</span>
+    {{/if}}
+
+    <a href="/products?page={{totalPages}}{{#if sort}}&sort={{sort}}{{/if}}"
+      class="btn btn-pagination btn-primary">Ult.Pág.</a>
+  </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="/js/viewsProducts.js"></script>

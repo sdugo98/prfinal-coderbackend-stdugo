@@ -1,0 +1,315 @@
+paths:
+  /carts:
+    get:
+      security:
+      - cookieAuth: []
+      summary: Obtener y listar, todos los carritos de BD
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Exito al recuperar carritos, Renderiza vista "viewCarts"
+        "404":
+          description: Error al renderizar y recuperar carritos
+        "500":
+          description: Error interno
+  /carts?limit:
+    get:
+      security:
+        - cookieAuth: []
+      parameters:
+          - in: query
+            name: limit
+            schema:
+              type: number
+              description: numero limit de listado
+      summary: Obtener y listar todos los carritos de la base de datos, implementando un limite.
+      tags: 
+        - Carts
+      responses:
+        "200":
+          description: Éxito al recuperar carritos.
+        "404":
+          description: Error al recuperar carrito.
+        "500":
+          description: Error interno del servidor.
+  /carts/{cartId}:
+    get:
+      security:
+      - cookieAuth: []
+      summary: Obtiene el carrito con id que se obtiene por parametro
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: Id carrito a buscar
+          schema:
+            type : string
+      tags:
+        - Carts
+      responses:
+        "201":
+          description: Exito al recuperar el carrito. Devuelve el carrito, renderizado en vista "ViewDetailCarts"
+        "400":
+          description: No se recupero carrito, ID incorrecto
+        "500":
+          description: Error interno.
+  /api/carts:
+    post:
+      security:
+      - cookieAuth: []    
+      summary: Crea nuevo carrito y lo guarda en BD.
+      tags:
+        - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/createCart'
+      responses:
+        "201":
+          description: Exito al crear el carrito.
+        "403":
+          description: Error al crear el carrito.
+          content: 
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#components/schemas/error8'
+        "500":
+          description: Error Interno.
+  
+  /api/carts/{cartId}:
+    put:
+      security:
+      - cookieAuth: []
+      summary: Obtiene el ID de un carrito, por medio de parametros en URL, y modifica el carrito, con los campos que le enviemos en el body
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: Id carrito a buscar
+          schema:
+            type : string
+      tags:
+        - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/putCart'
+      responses:
+        "201":
+          description: Exito al modificar el carrito.
+        "400":
+          description: No se recupero carrito, ID incorrecto
+          content: 
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#components/schemas/error4'
+                  - $ref: '#components/schemas/error6'
+        "500":
+          description: Error interno.
+      delete:
+        security:
+        - cookieAuth: []
+        summary: Obtiene el ID de un carrito, por medio de parametros en URL, y elimina todos los productos del carrito.
+        parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: Id carrito a buscar
+          schema:
+            type : string
+        tags:
+          - Carts
+        responses:
+          "201":
+            description: Exito al eliminar los productos.
+          "400":
+            description: No se recupero carrito, ID incorrecto
+          "500":
+            description: Error interno.
+  /api/carts/{cid}/product/{pid}:
+    post:
+      security:
+      - cookieAuth: []
+      summary: Recibe por parametros el Id de carrito y el Id de producto. Guarda el mismo, en el carrito recibido.
+      parameters:
+        - name: cid
+          in: path
+          description: ID del carrito
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: ID del producto
+          required: true
+          schema:
+            type: string
+      tags:
+          - Carts
+      responses:
+        "201":
+          description: Exito al agregar producto en el carrito.
+        "400":
+          description: Error en el proceso de guardado
+          content: 
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#components/schemas/error1'
+                  - $ref: '#components/schemas/error2'
+                  - $ref: '#components/schemas/error3'
+                  - $ref: '#components/schemas/error5'
+        "500":
+          description: Error interno.
+    delete:
+      security:
+      - cookieAuth: []
+      summary: Recibe por parametros el Id de carrito y el Id de producto. Elimina el mismo, del carrito recibido.
+      parameters:
+        - name: cid
+          in: path
+          description: ID del carrito
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: ID del producto
+          required: true
+          schema:
+            type: string
+      tags:
+          - Carts
+      responses:
+        "201":
+          description: Exito al eliminar producto en el carrito.
+        "400":
+          description: Error en el proceso de eliminacion
+        "500":
+          description: Error interno.
+    put:
+      security:
+      - cookieAuth: []
+      summary: Recibe por parametros el Id de carrito y el Id de producto. Modifica el mismo, en el carrito recibido.
+      parameters:
+        - name: cid
+          in: path
+          description: ID del carrito
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: ID del producto
+          required: true
+          schema:
+            type: string
+      tags:
+          - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/putProductInCart'      
+      responses:
+        "201":
+          description: Exito al modificar producto en el carrito.
+        "400":
+          description: Error en el proceso de modificacion.
+        "500":
+          description: Error interno.
+
+  /api/carts/{cid}/purchase:
+    post:
+      security:
+      - cookieAuth: []
+      summary: Obtiene el ID de un carrito, por medio de parametros en URL, e inicia el proceso de finalizacion de compra 
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id carrito a buscar
+          schema:
+            type : string
+      tags:
+        - Carts
+      responses:
+        "201":
+          description: Exito al finalizar la compra. Devuelve ticket de compra.
+        "400":
+          description: Error al finalizar la compra
+        "500":
+          description: Error interno.
+
+components:
+  schemas:
+    error1:
+      type: string
+      description: Error al validar el ID
+    error2:
+      type: string
+      description: Error al recuperar producto
+    error3:
+      type: string
+      description: Error al agregar el prod al carrito
+    error4:
+      type: string
+      description: No se puede modificar la propiedad _id
+    error5:
+      type: string
+      description: No puedes agregar productos creados por ti      
+    error6:
+      type: string
+      description: Error al modificar
+    error7:
+      type: string
+      description: Error al eliminar
+    error8:
+      type: string
+      description: Error al crearCarrito    
+  requestBodies:
+    createCart:
+      type: object
+      properties:
+        title: string
+        description: Nombre de carrito
+      example: 
+        title: Nuevo carrito
+    putCart:
+      type: object
+      properties:
+        title: string
+        description: Modificacion de carrito
+      example:
+        title: MOD CARRITO DESDE SWAGGER
+    putProductInCart:
+      type: object
+      properties:
+        quantity: number
+        description: Cambia la cantidad de producto en carrito
+      example: 
+        quantity: 2
+  securitySchemes:
+    basicAuth: 
+      type: http
+      scheme: basic
+    bearerAuth:           
+      type: http
+      scheme: bearer
+      bearerFormat: JWT   
+    cookieAuth:        
+      type: apiKey
+      in: cookie
+      name: CookieUser
+security:
+  - basicAuth: []
+  - bearerAuth: []
+  - cookieAuth: []

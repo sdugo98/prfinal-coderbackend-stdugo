@@ -1,0 +1,38 @@
+<hr class="hr-divider" />
+<div id="containerCart" class="container mt-4">
+
+    <div id="containerProducts" class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h4 class="detailCart text-center fw-bold">
+                            <div>ORDEN DE COMPRA</div>
+                            <div>ID: {{ticket._id}}</div>
+                            <hr class="hr-divider" />
+                            <div>
+                                <div>
+                                    <h4 class="detailCart text-center fw-bold">
+                                        COMPRADOR:
+                                        {{ticket.purchaser}}
+                                    </h4>
+                                    <h4 class="detailCart text-center fw-bold">
+                                        TOTAL: $-
+                                        {{ticket.amount}}
+                                    </h4>
+                                </div>
+                            </div>
+
+                        </h4>
+                    </li>
+                </ul>
+            </div>
+            <div class="alert alert-warning mt-4" role="alert">
+                LOS PRODUCTOS QUE NO CONTABAN CON EL STOCK DISPONIBLE SOLICITADO, QUEDARON ALMACENADOS EN NUESTRO
+                CARRITO.
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>menu2}}

@@ -1,0 +1,20 @@
+<h1 class="display-4 text-center mt-4">Perfil {{user.last_name}}</h1>
+<hr class="hr-divider">
+
+<div class="container text-center">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Información del Usuario</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item h4"><strong>Nombre:</strong> {{user.first_name}}</li>
+                <li class="list-group-item h4"><strong>Correo:</strong> {{user.email}}</li>
+                <li class="list-group-item h4"><strong>Rol:</strong> {{user.rol}}</li>
+            </ul>
+        </div>
+    </div>
+    <a href="api/users/premiun/{{user._id}}" class="btn btn-secondary m-2">Cambiar a premiun</a>
+    <a href="/users/premiun/{{user._id}}/documents" class="btn btn-secondary m-2">Cargar Documentacion</a>
+</div>
+
+
+{{>menu2}}

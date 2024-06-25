@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="display-4 text-center mt-4 text-dark">REESTABLECER CONTRASEÑA</h1>
+            <hr class="hr-divider">
+        </div>
+
+        <form action="/api/sessions/restPass1" method="post">
+            {{#if error}}
+            <div class="alert alert-danger">
+                {{error.message}}
+            </div>
+            {{/if}}
+            {{#if message}}
+            <div class="alert alert-success">
+                {{message}}
+            </div>
+            {{/if}}
+            <div class="mb-3">
+                <label for="email" class="form-label">Coloque su Email de Recuperacion:</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Ingrese email">
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Ingresar</button>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+</div>
